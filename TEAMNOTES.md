@@ -34,5 +34,11 @@ docker build -f Dockerfile -t "tripinsights/userprofile:1.0" .
 kubectl apply -f=openhack-secrets.yaml
 
 
+###Get in the AKS context from CloudShell
+AKS_CLUSTER_NAME=openhack-23196
+RESOURCE_GROUP=teamResources
+az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
+
+
 
 
