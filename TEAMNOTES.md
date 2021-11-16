@@ -25,7 +25,8 @@ docker run -d -p 8080:80 --network openhack-net --name poi -e "SQL_PASSWORD=<SQL
   
 Test: http://localhost:8080/api/poi
 
-
+### Create secret from file
+kubectl apply -f=openhack-secrets.yaml
 
 
 
