@@ -25,6 +25,11 @@ docker run -d -p 8080:80 --network openhack-net --name poi -e "SQL_PASSWORD=<SQL
   
 Test: http://localhost:8080/api/poi
 
+### Push image to Azure Container Registry
+docker build -f Dockerfile -t "tripinsights/userprofile:1.0" .
+ docker tag tripinsights/userprofile:1.0 registryhro9346.azurecr.io/tripinsights/userprofile:1.0
+ docker push registryhro9346.azurecr.io/tripinsights/userprofile:1.0
+
 ### Create secret from file
 kubectl apply -f=openhack-secrets.yaml
 
