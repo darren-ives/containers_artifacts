@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips
+  labels:
+    app: trips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - name: trips
+        image: registryhro9346.azurecr.io/tripinsights/trips:1.0
+        ports:
+        - containerPort: 80
+        env:
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: username
+        - name: SQL_SERVER
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: server
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: password
+        - name: OPENAPI_DOCS_URI
+          value: http://changeme

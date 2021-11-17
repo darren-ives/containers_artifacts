@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-java
+  labels:
+    app: user-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-java
+  template:
+    metadata:
+      labels:
+        app: user-java
+    spec:
+      containers:
+      - name: user-java
+        image: registryhro9346.azurecr.io/tripinsights/user-java:1.1
+        ports:
+        - containerPort: 80
+        env:
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: username
+        - name: SQL_SERVER
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: server
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: password

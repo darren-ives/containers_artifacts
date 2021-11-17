@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi
+  labels:
+    app: poi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - name: poi
+        image: registryhro9346.azurecr.io/tripinsights/poi:1.0
+        ports:
+        - containerPort: 80
+        env:
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: username
+        - name: SQL_SERVER
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: server
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openhack-dbaccess
+              key: password
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
