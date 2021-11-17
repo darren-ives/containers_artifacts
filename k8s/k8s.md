@@ -2,6 +2,7 @@ REGION_NAME=northeurope
 RESOURCE_GROUP=teamResources
 SUBNET_NAME=vm-subnet
 VNET_NAME=vnet
+ACR_NAME=registryhro9346
 
 
 SUBNET_ID=$(az network vnet subnet show \
@@ -17,13 +18,16 @@ VERSION=$(az aks get-versions \
 
 
 AKS_CLUSTER_NAME=openhack-$RANDOM
-	
 
+### create admin group
+az ad group create --display-name myAKSAdminGroup --mail-nickname myAKSAdminGroup	
+
+### create cluster
 az aks create \
 --resource-group $RESOURCE_GROUP \
 --name $AKS_CLUSTER_NAME \
 --vm-set-type VirtualMachineScaleSets \
---node-count 2 \
+--node-count 5 \
 --load-balancer-sku standard \
 --location $REGION_NAME \
 --kubernetes-version $VERSION \
@@ -32,7 +36,10 @@ az aks create \
 --service-cidr 10.1.0.0/24 \
 --dns-service-ip 10.1.0.10 \
 --docker-bridge-address 172.17.0.1/16 \
---generate-ssh-keys
+--generate-ssh-keys \
+--enable-aad \
+--aad-admin-group-object-ids bef5b92d-6427-4f5c-b4cf-69df22d76caa \
+--enable-azure-rbac
 
 
 az aks update \
@@ -46,6 +53,9 @@ az aks get-credentials \
 
 
 kubectl get nodes
+
+### create namespaces
+kubectl create -f namespaces.yaml
 
 kubectl apply -f userprofile.yaml
 

@@ -2,10 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tripsviewer
+  namespace: web
   labels:
     app: tripsviewer
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: tripsviewer

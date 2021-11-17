@@ -2,10 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: poi
+  namespace: api
   labels:
     app: poi
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: poi

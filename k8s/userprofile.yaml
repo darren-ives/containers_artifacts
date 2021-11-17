@@ -2,10 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: userprofile
+  namespace: api
   labels:
     app: userprofile
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: userprofile
