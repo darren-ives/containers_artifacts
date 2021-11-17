@@ -38,3 +38,17 @@ spec:
               key: password
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poi
+  namespace: api
+spec:
+  selector:
+    app: poi
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP

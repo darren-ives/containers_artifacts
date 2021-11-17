@@ -36,3 +36,17 @@ spec:
             secretKeyRef:
               name: openhack-dbaccess
               key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-java
+  namespace: api
+spec:
+  selector:
+    app: user-java
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
