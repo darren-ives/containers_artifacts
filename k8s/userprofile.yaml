@@ -20,19 +20,14 @@ spec:
         image: registryhro9346.azurecr.io/tripinsights/userprofile:1.0
         ports:
         - containerPort: 80
-        env:
-        - name: SQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: openhack-dbaccess
-              key: username
-        - name: SQL_SERVER
-          valueFrom:
-            secretKeyRef:
-              name: openhack-dbaccess
-              key: server
-        - name: SQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: openhack-dbaccess
-              key: password
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/secrets"
+          readOnly: true
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-sync"  

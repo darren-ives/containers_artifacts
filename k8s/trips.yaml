@@ -20,21 +20,17 @@ spec:
         image: registryhro9346.azurecr.io/tripinsights/trips:1.0
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/secrets"
+          readOnly: true
         env:
-        - name: SQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: openhack-dbaccess
-              key: username
-        - name: SQL_SERVER
-          valueFrom:
-            secretKeyRef:
-              name: openhack-dbaccess
-              key: server
-        - name: SQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: openhack-dbaccess
-              key: password
         - name: OPENAPI_DOCS_URI
           value: http://changeme
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-sync"  
