@@ -47,6 +47,8 @@ az aks update \
     --resource-group $RESOURCE_GROUP \
     --attach-acr $ACR_NAME
 
+az aks update -g $RESOURCE_GROUP -n openhack-7589 --enable-pod-identity --enable-pod-identity-with-kubenet
+
 az aks get-credentials \
     --resource-group $RESOURCE_GROUP \
     --name $AKS_CLUSTER_NAME
